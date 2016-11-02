@@ -1,5 +1,7 @@
 package ly.generalassemb.drewmahrt.shoppinglistdetailview;
 
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,12 +31,21 @@ public class MainActivity extends AppCompatActivity implements DetailFragment.On
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 
         shoppingListRecyclerView.setLayoutManager(linearLayoutManager);
-        shoppingListRecyclerView.setAdapter(new ShoppingListAdapter(shoppingList));
+        shoppingListRecyclerView.setAdapter(new ShoppingListAdapter(shoppingList, this));
 
     }
 
     @Override
     public void onShoppingListItemClick(int shoppingItem_id) {
+        if(findViewById(R.id.fragment_container)!=null){
+            Fragment fragment = DetailFragment.newInstance(shoppingItem_id);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        }else{
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra(DetailActivity.ITEM_ID_KEY, shoppingItem_id);
+            startActivity(intent);
+
+        }
 
     }
 }
