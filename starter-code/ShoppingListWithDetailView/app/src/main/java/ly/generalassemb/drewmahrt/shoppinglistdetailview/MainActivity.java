@@ -9,7 +9,7 @@ import java.util.List;
 
 import ly.generalassemb.drewmahrt.shoppinglistdetailview.setup.DBAssetHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DetailFragment.OnShoppingListItemClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
         shoppingListRecyclerView.setLayoutManager(linearLayoutManager);
         shoppingListRecyclerView.setAdapter(new ShoppingListAdapter(shoppingList));
+
+    }
+
+    @Override
+    public void onShoppingListItemClick(int shoppingItem_id) {
 
     }
 }

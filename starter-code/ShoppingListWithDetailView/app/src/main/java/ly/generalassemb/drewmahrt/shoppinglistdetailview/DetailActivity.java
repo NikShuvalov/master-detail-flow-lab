@@ -1,6 +1,7 @@
 package ly.generalassemb.drewmahrt.shoppinglistdetailview;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -31,24 +32,8 @@ public class DetailActivity extends AppCompatActivity {
             finish();
         }
 
-        // Get the selected item from the database.
-        // Write a new method in the open helper for this.
-        ShoppingItem selectedItem = ShoppingSQLiteOpenHelper.getInstance(this)
-                .getShoppingItemById(selectedItemId);
+        Fragment fragment = DetailFragment.newInstance(selectedItemId);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
 
-        // If unable to retrieve item from database, no reason to continue
-        if (selectedItem == null) {
-            Log.d("DetailActivity", "onCreate: Unable to get item from database!");
-            finish();
-        }
-
-        // Populate the TextViews
-        name.setText(selectedItem.getName());
-        description.setText(selectedItem.getDescription());
-        category.setText(selectedItem.getType());
-
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        double priceValue = Double.valueOf(selectedItem.getPrice());
-        price.setText(currencyFormat.format(priceValue));
     }
 }
